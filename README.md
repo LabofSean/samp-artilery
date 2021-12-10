@@ -1,5 +1,5 @@
 ## Dependencies:
-streamer
+streamer,
 colandreas or FCNPC
 
 ```ART_DELAY``` - update frequency all artillery guns

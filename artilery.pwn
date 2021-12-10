@@ -30,6 +30,10 @@
 	#define ART_TICKS_TO_LARG	200		// temporarily not used
 #endif
 
+#if !defined ART_EXPLODE
+	#define ART_EXPLODE		12
+#endif
+
 #if !defined ART_CORE
 	#define ART_CORE			E_STREAMER_CUSTOM(500)
 #endif
@@ -86,7 +90,7 @@ public OnDynamicObjectMoved(objectid)
 		new Float:x, Float:y, Float:z;
 
 		GetDynamicObjectPos(objectid, x, y, z);
-		CreateExplosion(x, y, z, 6, 35);
+		CreateExplosion(x, y, z, ART_EXPLODE, 35);
 		DestroyDynamicObject(objectid);
 
 		return 1;

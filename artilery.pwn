@@ -19,19 +19,19 @@
 #endif
 
 #if !defined ART_SPEED_MINI
-	#define ART_SPEED_MINI		50
+	#define ART_SPEED_MINI			50
 #endif
 
 #if !defined ART_SPEED_LARG
-	#define ART_SPEED_LARG		150		// temporarily not used
+	#define ART_SPEED_LARG			150		// temporarily not used
 #endif
 
 #if !defined ART_TICKS_TO_LARG
-	#define ART_TICKS_TO_LARG	200		// temporarily not used
+	#define ART_TICKS_TO_LARG		200		// temporarily not used
 #endif
 
 #if !defined ART_EXPLODE
-	#define ART_EXPLODE		12
+	#define ART_EXPLODE			12
 #endif
 
 #if !defined ART_CORE
@@ -53,8 +53,8 @@ enum e_ART_DATA {
 }
 
 new artData[][e_ART_DATA] = {
-	{	354.282257, 2028.962769, 27.157236, 400.0,	1,	INVALID_PLAYER_ID,	-1	},
-	{	188.372253, 2081.309814, 27.128162, 400.0,	1,	INVALID_PLAYER_ID,	-1	},
+	{	354.282257, 2028.962769, 27.157236,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
+	{	188.372253, 2081.309814, 27.128162,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
 	{	15.610102, 1718.534424, 26.998699,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
 	{	237.753082, 1696.217407, 26.982977,	400.0,	1,	INVALID_PLAYER_ID,	-1	}
 };

@@ -31,7 +31,7 @@
 #endif
 
 #if !defined ART_EXPLODE
-	#define ART_EXPLODE			12
+	#define ART_EXPLODE			4
 #endif
 
 #if !defined ART_CORE

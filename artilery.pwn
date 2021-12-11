@@ -11,35 +11,35 @@
 #tryinclude <foreach>
 
 #if defined _FOREACH_LOCAL_VERSION
-	#define ART_FOREACH			1
+	#define ART_FOREACH				1
 #endif
 
 #if !defined ART_DELAY
-	#define ART_DELAY			50
+	#define ART_DELAY				50
 #endif
 
 #if !defined ART_SPEED_MINI
-	#define ART_SPEED_MINI			50
+	#define ART_SPEED_MINI				50
 #endif
 
 #if !defined ART_SPEED_LARG
-	#define ART_SPEED_LARG			150		// temporarily not used
+	#define ART_SPEED_LARG				150		// temporarily not used
 #endif
 
 #if !defined ART_TICKS_TO_LARG
-	#define ART_TICKS_TO_LARG		200		// temporarily not used
+	#define ART_TICKS_TO_LARG			200		// temporarily not used
 #endif
 
 #if !defined ART_EXPLODE
-	#define ART_EXPLODE			4
+	#define ART_EXPLODE				6
 #endif
 
 #if !defined ART_CORE
-	#define ART_CORE			E_STREAMER_CUSTOM(500)
+	#define ART_CORE				E_STREAMER_CUSTOM(500)
 #endif
 
 #if !defined ART_ID
-	#define ART_ID				E_STREAMER_CUSTOM(501)
+	#define ART_ID					E_STREAMER_CUSTOM(501)
 #endif
 
 enum e_ART_DATA {
@@ -53,15 +53,21 @@ enum e_ART_DATA {
 }
 
 new artData[][e_ART_DATA] = {
-	{	354.282257, 2028.962769, 27.157236,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
-	{	188.372253, 2081.309814, 27.128162,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
-	{	15.610102, 1718.534424, 26.998699,	400.0,	1,	INVALID_PLAYER_ID,	-1	},
-	{	237.753082, 1696.217407, 26.982977,	400.0,	1,	INVALID_PLAYER_ID,	-1	}
+	{	188.209503, 2081.165527, 26.092545, 400.0, 1, INVALID_PLAYER_ID, -1	},
+	{	354.407928, 2028.423218, 26.139120, 400.0, 1, INVALID_PLAYER_ID, -1	},
+	{	237.608398, 1696.536255, 26.099346, 400.0, 1, INVALID_PLAYER_ID, -1	},
+	{	15.7157551, 1718.894897, 26.111212, 400.0, 1, INVALID_PLAYER_ID, -1	},
+	{	-1394.779419, 493.404846, 21.681023, 500.0, 1, INVALID_PLAYER_ID, -1	},
+	{	-1324.414063, 493.413239, 24.688835, 500.0, 1, INVALID_PLAYER_ID, -1	}
 };
 
 public OnFilterScriptInit()
 {
 	new arts;
+
+	#if defined ART_STREAMRATE
+		Streamer_SetTickRate(ART_STREAMRATE);
+	#endif
 
 	for(new i; i < sizeof(artData); i ++)
 	{
@@ -181,8 +187,13 @@ public ArtShoot(artid)
 		Float:atX, Float:atY, Float:atZ,
 		Float:dist = GetPlayerDistanceFromPoint(userid, pX, pY, pZ);
 
-	GetPlayerPosFrontVehicleToArt(userid, dist, atX, atY, atZ);
+	new offdist = GetPlayerPosFrontVehicleToArt(userid, dist, atX, atY, atZ);
 	CA_RayCastLine(pX, pY, pZ, atX, atY, atZ, atX, atY, atZ);
+
+	if(DistancePointToPoint(pX, pY, pZ, atX, atY, atZ) + 10 < dist)
+		return 1;
+
+	dist += offdist;
 
 	new objectid = CreateDynamicObject(3065, pX, pY, pZ, 0, 0, 0, GetPlayerVirtualWorld(userid), -1);
 
@@ -218,9 +229,6 @@ stock GetPlayerPosFrontVehicleToArt(playerid, Float:dist, &Float:atX, &Float:atY
 	
 	dist = GetVehicleSpeed(vehicleid) - 4;
 
-	if(dist >= 40)
-		dist += 8;
-
 	GetVehiclePos(vehicleid, pX, pY, pZ);
 	GetVehicleRotation(vehicleid, vX, vY, vZ);
 
@@ -228,10 +236,12 @@ stock GetPlayerPosFrontVehicleToArt(playerid, Float:dist, &Float:atX, &Float:atY
 	atY = floatround( pY + (dist * floatcos(-vZ, degrees)) ),
 	atZ = floatround( pZ + (dist * floatsin(vX, degrees)) );
 
-	return 1;
+	return floatround(dist);
 }
 
 //
+stock DistancePointToPoint(Float: x, Float: y, Float: z, Float: fx, Float:fy, Float: fz)
+	return floatround(floatsqroot(floatpower(fx - x, 2) + floatpower(fy - y, 2) + floatpower(fz - z, 2)));
 
 stock GetVehicleSpeed(vehicleid)
 {

@@ -193,7 +193,7 @@ public ArtShoot(artid)
 	if(DistancePointToPoint(pX, pY, pZ, atX, atY, atZ) + 10 < dist)
 		return 1;
 
-	dist += offdist;
+	dist += offdist + 6;
 
 	new objectid = CreateDynamicObject(3065, pX, pY, pZ, 0, 0, 0, GetPlayerVirtualWorld(userid), -1);
 

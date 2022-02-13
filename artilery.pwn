@@ -3,7 +3,7 @@
 **
 **
 */
-#define FILTERSCRIP
+#define FILTERSCRIPT
 
 #include <a_samp>
 #include <streamer>
